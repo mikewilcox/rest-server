@@ -1,0 +1,16 @@
+[
+	{
+		"username":"anm8tr",
+		"firstname":"Mike",
+		"lastname":"Wilcox",
+		"email":"mike@mike.com",
+		"acl":"admin"
+	},
+	{
+		"username":"dataman",
+		"firstname":"Don",
+		"lastname":"Smith",
+		"email":"don@don.com",
+		"acl":"admin"
+	}
+]

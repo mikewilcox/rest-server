@@ -1,0 +1,199 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', 'dtrace-provider' ]
+2 info using npm@1.1.69
+3 info using node@v0.8.16
+4 verbose read json /Users/mike/Sites/dojotoolkit/rest/package.json
+5 verbose read json /Users/mike/Sites/dojotoolkit/rest/node_modules/mongoose/package.json
+6 verbose read json /Users/mike/Sites/dojotoolkit/rest/node_modules/restify/package.json
+7 verbose read json /Users/mike/Sites/dojotoolkit/rest/package.json
+8 verbose cache add [ 'dtrace-provider', null ]
+9 silly cache add name=undefined spec="dtrace-provider" args=["dtrace-provider",null]
+10 verbose parsed url { pathname: 'dtrace-provider',
+10 verbose parsed url   path: 'dtrace-provider',
+10 verbose parsed url   href: 'dtrace-provider' }
+11 silly lockFile 37f4a289-dtrace-provider dtrace-provider
+12 verbose lock dtrace-provider /Users/mike/.npm/37f4a289-dtrace-provider.lock
+13 silly lockFile 37f4a289-dtrace-provider dtrace-provider
+14 verbose addNamed [ 'dtrace-provider', '' ]
+15 verbose addNamed [ null, '' ]
+16 silly lockFile 7dd3e74e-dtrace-provider dtrace-provider@
+17 verbose lock dtrace-provider@ /Users/mike/.npm/7dd3e74e-dtrace-provider.lock
+18 silly addNameRange { name: 'dtrace-provider', range: '', hasData: false }
+19 verbose url raw dtrace-provider
+20 verbose url resolving [ 'https://registry.npmjs.org/', './dtrace-provider' ]
+21 verbose url resolved https://registry.npmjs.org/dtrace-provider
+22 info trying registry request attempt 1 at 09:42:48
+23 verbose etag "CGCN1N6YJSEU5XF83FCLTN53"
+24 http GET https://registry.npmjs.org/dtrace-provider
+25 http 304 https://registry.npmjs.org/dtrace-provider
+26 silly registry.get cb [ 304,
+26 silly registry.get   { server: 'CouchDB/1.2.0 (Erlang OTP/R15B)',
+26 silly registry.get     etag: '"CGCN1N6YJSEU5XF83FCLTN53"',
+26 silly registry.get     date: 'Sun, 06 Jan 2013 15:41:30 GMT',
+26 silly registry.get     'content-length': '0' } ]
+27 verbose etag dtrace-provider from cache
+28 silly addNameRange number 2 { name: 'dtrace-provider', range: '', hasData: true }
+29 silly addNameRange versions [ 'dtrace-provider',
+29 silly addNameRange   [ '0.0.1',
+29 silly addNameRange     '0.0.2',
+29 silly addNameRange     '0.0.3',
+29 silly addNameRange     '0.0.4',
+29 silly addNameRange     '0.0.5',
+29 silly addNameRange     '0.0.6',
+29 silly addNameRange     '0.0.7',
+29 silly addNameRange     '0.0.8',
+29 silly addNameRange     '0.0.9',
+29 silly addNameRange     '0.2.0',
+29 silly addNameRange     '0.2.1',
+29 silly addNameRange     '0.2.2',
+29 silly addNameRange     '0.2.3',
+29 silly addNameRange     '0.2.4',
+29 silly addNameRange     '0.2.5',
+29 silly addNameRange     '0.2.6',
+29 silly addNameRange     '0.2.7' ] ]
+30 verbose addNamed [ 'dtrace-provider', '0.2.7' ]
+31 verbose addNamed [ '0.2.7', '0.2.7' ]
+32 silly lockFile 4494f226-dtrace-provider-0-2-7 dtrace-provider@0.2.7
+33 verbose lock dtrace-provider@0.2.7 /Users/mike/.npm/4494f226-dtrace-provider-0-2-7.lock
+34 verbose read json /Users/mike/.npm/dtrace-provider/0.2.7/package/package.json
+35 silly lockFile 4494f226-dtrace-provider-0-2-7 dtrace-provider@0.2.7
+36 silly lockFile 7dd3e74e-dtrace-provider dtrace-provider@
+37 silly resolved [ { name: 'dtrace-provider',
+37 silly resolved     version: '0.2.7',
+37 silly resolved     description: 'Native DTrace providers for node.js applications',
+37 silly resolved     keywords: [ 'dtrace' ],
+37 silly resolved     homepage: 'https://github.com/chrisa/node-dtrace-provider#readme',
+37 silly resolved     author: { name: 'Chris Andrews', email: 'chris@nodnol.org' },
+37 silly resolved     repository:
+37 silly resolved      { type: 'git',
+37 silly resolved        url: 'http://github.com/chrisa/node-dtrace-provider.git' },
+37 silly resolved     engines: { node: '>=0.6' },
+37 silly resolved     devDependencies: { tap: '>=0.2.0', execSync: '>=0.0.1' },
+37 silly resolved     main: './dtrace-provider.js',
+37 silly resolved     scripts: { install: 'node-gyp rebuild' },
+37 silly resolved     gypfile: true,
+37 silly resolved     readme: '# dtrace-provider - Native DTrace providers for Node.js apps.\n\nThis extension allows you to create native DTrace providers for your\nNode.js applications. That is, to create providers and probes which\nexpose information specific to your application, rather than\ninformation about the node runtime.\n\nYou could use this to expose high-level information about the inner\nworkings of your application, or to create a specific context in which\nto look at information from other runtime or system-level providers. \n\nThe provider is not created in the usual way, by declaring it and then\nchanging the build process to include it, but instead dynamically at\nruntime. This is done entirely in-process, and there is no background\ncompiler or dtrace(1) invocation. The process creating the provider\nneed not run as root.\n\n## INSTALL\n\n    $ npm install dtrace-provider\n\n## EXAMPLE\n\nHere\'s a simple example of creating a provider:\n\n    var d = require(\'dtrace-provider\');\n\n    var dtp = d.createDTraceProvider("nodeapp");\n    var p1 = dtp.addProbe("probe1", "int", "int");\n    var p2 = dtp.addProbe("probe2", "char *");\n    dtp.enable();\t   \n\nProbes may be fired via the provider object:\n\n    dtp.fire("probe1", function(p) {\n        return [1, 2];\n    });\n    dtp.fire("probe2", function(p) { \n        return ["hello, dtrace via provider", "foo"];\n    });\n\nor via the probe objects themselves:\n\n    p1.fire(function(p) {\n      return [1, 2, 3, 4, 5, 6];\n    });\n    p2.fire(function(p) {\n      return ["hello, dtrace via probe", "foo"];\n    });\n\nThis example creates a provider called "nodeapp", and adds two\nprobes. It then enables the provider, at which point the provider\nbecomes visible to DTrace.\n\nThe probes are then fired, which produces this output:\n\n    $ sudo dtrace -Z -n \'nodeapp*:::probe1{ trace(arg0); trace(arg1) }\'  \\\n                     -n \'nodeapp*:::probe2{ trace(copyinstr(arg0));  }\'\n    dtrace: description \'nodeapp*:::probe1\' matched 0 probes\n    dtrace: description \'nodeapp*:::probe2\' matched 0 probes\n    CPU     ID                    FUNCTION:NAME\n      1 123562                      func:probe1                 1                2\n      1 123563                      func:probe2   hello, dtrace                    \n\nArguments are captured by a callback only executed when the probe is\nenabled. This means you can do more expensive work to gather arguments.\n\nThe maximum number of arguments supported is 32. \n\nAvailable argument types are "int", for integer numeric values,\n"char *" for strings, and "json" for objects rendered into JSON strings.\n\nArguments typed as "json" will be created as "char *" probes in\nDTrace, but objects passed to these probe arguments will be\nautomatically serialized to JSON before being passed to DTrace. This\nfeature is best used in conjunction with the json() D subroutine, but\nis available whether or not the platform supports it.\n\n    # create a json probe:\n\n    var dtp = d.createDTraceProvider("nodeapp");\n    var p1 = dtp.addProbe("j1", "json");\n    dtp.enable();\n    p1.fire(function() { return { "foo" => "bar" }; });\n\n    # on a platform supporting json():\n\n    $ sudo dtrace -Z -n \'nodeapp*:::j1{ this->j = copyinstr(arg0); \\\n                                        trace(json(this->j, "foo")) }\'\n    dtrace: description \'nodeapp$target:::j1\' matched 0 probes\n    CPU     ID                    FUNCTION:NAME\n      0  68712                            j1:j1   bar\n\n## PLATFORM SUPPORT\n\nThis libusdt-based Node.JS module supports 64 and 32 bit processes on\nMac OS X and Solaris-like systems such as Illumos or SmartOS. As more\nplatform support is added to libusdt, those platforms will be\nsupported by this module. See libusdt\'s status at:\n\n  https://github.com/chrisa/libusdt#readme\n\nFreeBSD is supported in principle but is restricted to only 4 working\narguments per probe.\n\nPlatforms not supporting DTrace (notably, Linux and Windows) may\ninstall this module without building libusdt, with a stub no-op\nimplementation provided for compatibility. This allows cross-platform\nnpm modules to embed probes and include a dependency on this module.\n\nGNU Make is required to build libusdt; the build scripts will look for\ngmake in PATH first, and then for make.\n\n## CAVEATS\n\nThere is some overhead to probes, even when disabled. Probes are\nalready using the "is-enabled" feature of DTrace to control execution\nof the arguments-gathering callback, but some work still needs to be\ndone before that\'s checked. This overhead should not be a problem\nunless probes are placed in particularly hot code paths.\n\n## CONTRIBUTING\n\nThe source is available at:\n\n  https://github.com/chrisa/node-dtrace-provider.\n\nFor issues, please use the Github issue tracker linked to the\nrepository. Github pull requests are very welcome. \n\n## RUNNING THE TESTS\n\n   $ npm install\n   $ sudo ./node_modules/.bin/tap --tap test/*.test.js\n\n## OTHER IMPLEMENTATIONS\n\nThis node extension is derived from the ruby-dtrace gem, via the Perl\nmodule Devel::DTrace::Provider, both of which provide the same\nfunctionality to those languages.\n',
+37 silly resolved     readmeFilename: 'README.md',
+37 silly resolved     _id: 'dtrace-provider@0.2.7',
+37 silly resolved     _from: 'dtrace-provider' } ]
+38 info install dtrace-provider@0.2.7 into /Users/mike/Sites/dojotoolkit/rest
+39 info installOne dtrace-provider@0.2.7
+40 verbose from cache /Users/mike/.npm/dtrace-provider/0.2.7/package/package.json
+41 info /Users/mike/Sites/dojotoolkit/rest/node_modules/dtrace-provider unbuild
+42 verbose read json /Users/mike/Sites/dojotoolkit/rest/node_modules/dtrace-provider/package.json
+43 verbose tar unpack /Users/mike/.npm/dtrace-provider/0.2.7/package.tgz
+44 silly lockFile d5b7db9e-est-node-modules-dtrace-provider /Users/mike/Sites/dojotoolkit/rest/node_modules/dtrace-provider
+45 verbose lock /Users/mike/Sites/dojotoolkit/rest/node_modules/dtrace-provider /Users/mike/.npm/d5b7db9e-est-node-modules-dtrace-provider.lock
+46 silly gunzTarPerm modes [ '755', '644' ]
+47 silly gunzTarPerm extractEntry package.json
+48 silly gunzTarPerm extractEntry .npmignore
+49 silly gunzTarPerm extractEntry README.md
+50 silly gunzTarPerm extractEntry LICENCE
+51 silly gunzTarPerm extractEntry dtrace-provider.js
+52 silly gunzTarPerm extractEntry foo.js
+53 silly gunzTarPerm extractEntry libusdt-arch.js
+54 silly gunzTarPerm extractEntry libusdt/.npmignore
+55 silly gunzTarPerm extractEntry libusdt/README.md
+56 silly gunzTarPerm extractEntry libusdt/LICENCE
+57 silly gunzTarPerm extractEntry libusdt/usdt_tracepoints_x86_64.s
+58 silly gunzTarPerm extractEntry libusdt/test.pl
+59 silly gunzTarPerm extractEntry libusdt/test_mem_usage.c
+60 silly gunzTarPerm extractEntry libusdt/test_usdt.c
+61 silly gunzTarPerm extractEntry libusdt/usdt.c
+62 silly gunzTarPerm extractEntry libusdt/Makefile
+63 silly gunzTarPerm extractEntry libusdt/usdt_dof.c
+64 silly gunzTarPerm extractEntry libusdt/usdt_dof_file.c
+65 silly gunzTarPerm extractEntry libusdt/usdt_dof_sections.c
+66 silly gunzTarPerm extractEntry libusdt/usdt_internal.h
+67 silly gunzTarPerm extractEntry libusdt/usdt_probe.c
+68 silly gunzTarPerm extractEntry libusdt/usdt_tracepoints_i386.s
+69 silly gunzTarPerm extractEntry libusdt/usdt.h
+70 silly gunzTarPerm extractEntry dtrace_provider.h
+71 silly gunzTarPerm extractEntry binding.gyp
+72 silly gunzTarPerm extractEntry CHANGES.md
+73 silly gunzTarPerm extractEntry .gitmodules
+74 silly gunzTarPerm extractEntry libusdt-build.sh
+75 silly gunzTarPerm extractEntry dtrace_argument.cc
+76 silly gunzTarPerm extractEntry dtrace_probe.cc
+77 silly gunzTarPerm extractEntry dtrace_provider.cc
+78 silly gunzTarPerm extractEntry README.md~
+79 silly gunzTarPerm extractEntry test/32probe-char.test.js
+80 silly gunzTarPerm extractEntry test/enabledagain.test.js
+81 silly gunzTarPerm extractEntry test/enabledagain_fire.js
+82 silly gunzTarPerm extractEntry test/fewer-args-json.test.js
+83 silly gunzTarPerm extractEntry test/fewer-args-json_fire.js
+84 silly gunzTarPerm extractEntry test/enabled-disabled_fire.js
+85 silly gunzTarPerm extractEntry test/fewer-args_fire.js
+86 silly gunzTarPerm extractEntry test/gc.js
+87 silly gunzTarPerm extractEntry test/gc.test.js
+88 silly gunzTarPerm extractEntry test/gc2.js
+89 silly gunzTarPerm extractEntry test/gc3.js
+90 silly gunzTarPerm extractEntry test/enabled-disabled.test.js
+91 silly gunzTarPerm extractEntry test/gc_fire.js
+92 silly gunzTarPerm extractEntry test/dtrace-test.js
+93 silly gunzTarPerm extractEntry test/json-args.test.js
+94 silly gunzTarPerm extractEntry test/disambiguation_fire.js
+95 silly gunzTarPerm extractEntry test/json-args_fire.js
+96 silly gunzTarPerm extractEntry test/disambiguation.test.js
+97 silly gunzTarPerm extractEntry test/mem.js
+98 silly gunzTarPerm extractEntry test/basic_fire.js
+99 silly gunzTarPerm extractEntry test/more-args.test.js
+100 silly gunzTarPerm extractEntry test/basic.test.js
+101 silly gunzTarPerm extractEntry test/more-args_fire.js
+102 silly gunzTarPerm extractEntry test/32probe_fire.js
+103 silly gunzTarPerm extractEntry test/multiple-json-args.test.js
+104 silly gunzTarPerm extractEntry test/32probe.test.js
+105 silly gunzTarPerm extractEntry test/multiple-json-args_fire.js
+106 silly gunzTarPerm extractEntry test/32probe-char_fire.js
+107 silly gunzTarPerm extractEntry test/notenabled.test.js
+108 silly gunzTarPerm extractEntry test/fewer-args.test.js
+109 silly gunzTarPerm extractEntry TODO.md
+110 silly gunzTarPerm extractEntry wscript
+111 verbose read json /Users/mike/Sites/dojotoolkit/rest/node_modules/dtrace-provider/package.json
+112 silly lockFile d5b7db9e-est-node-modules-dtrace-provider /Users/mike/Sites/dojotoolkit/rest/node_modules/dtrace-provider
+113 info preinstall dtrace-provider@0.2.7
+114 verbose from cache /Users/mike/Sites/dojotoolkit/rest/node_modules/dtrace-provider/package.json
+115 verbose readDependencies using package.json deps
+116 verbose from cache /Users/mike/Sites/dojotoolkit/rest/node_modules/dtrace-provider/package.json
+117 verbose readDependencies using package.json deps
+118 silly resolved []
+119 verbose about to build /Users/mike/Sites/dojotoolkit/rest/node_modules/dtrace-provider
+120 info build /Users/mike/Sites/dojotoolkit/rest/node_modules/dtrace-provider
+121 verbose from cache /Users/mike/Sites/dojotoolkit/rest/node_modules/dtrace-provider/package.json
+122 verbose linkStuff [ false,
+122 verbose linkStuff   false,
+122 verbose linkStuff   false,
+122 verbose linkStuff   '/Users/mike/Sites/dojotoolkit/rest/node_modules' ]
+123 info linkStuff dtrace-provider@0.2.7
+124 verbose linkBins dtrace-provider@0.2.7
+125 verbose linkMans dtrace-provider@0.2.7
+126 verbose rebuildBundles dtrace-provider@0.2.7
+127 info install dtrace-provider@0.2.7
+128 verbose unsafe-perm in lifecycle false
+129 verbose set uid from=0 to=502
+130 silly exec sh "-c" "node-gyp rebuild"
+131 silly sh,-c,node-gyp rebuild,/Users/mike/Sites/dojotoolkit/rest/node_modules/dtrace-provider spawning
+132 info dtrace-provider@0.2.7 Failed to exec install script
+133 info /Users/mike/Sites/dojotoolkit/rest/node_modules/dtrace-provider unbuild
+134 verbose from cache /Users/mike/Sites/dojotoolkit/rest/node_modules/dtrace-provider/package.json
+135 info preuninstall dtrace-provider@0.2.7
+136 info uninstall dtrace-provider@0.2.7
+137 verbose true,/Users/mike/Sites/dojotoolkit/rest/node_modules,/Users/mike/Sites/dojotoolkit/rest/node_modules unbuild dtrace-provider@0.2.7
+138 info postuninstall dtrace-provider@0.2.7
+139 error dtrace-provider@0.2.7 install: `node-gyp rebuild`
+139 error `sh "-c" "node-gyp rebuild"` failed with 1
+140 error Failed at the dtrace-provider@0.2.7 install script.
+140 error This is most likely a problem with the dtrace-provider package,
+140 error not with npm itself.
+140 error Tell the author that this fails on your system:
+140 error     node-gyp rebuild
+140 error You can get their info via:
+140 error     npm owner ls dtrace-provider
+140 error There is likely additional logging output above.
+141 error System Darwin 10.8.0
+142 error command "node" "/usr/local/bin/npm" "install" "dtrace-provider"
+143 error cwd /Users/mike/Sites/dojotoolkit/rest
+144 error node -v v0.8.16
+145 error npm -v 1.1.69
+146 error code ELIFECYCLE
+147 verbose exit [ 1, true ]
