@@ -8,12 +8,10 @@ var exit = function(){
 var mongoose = require('mongoose');
 var Deferred = require('promised-io/promise').Deferred;
 var all = require("promised-io/promise").all;
-var seq = require("promised-io/promise").seq;
-var step = require("promised-io/promise").step;
 var fs = require('fs');
 var testData = JSON.parse(fs.readFileSync('../data/users.json', 'utf-8'));
 
-//console.log('seq:', seq);
+console.log('TestData:', testData);
 
 // add a check in mongoose for if db connected
 mongoose.connect('mongodb://localhost/test');
@@ -53,26 +51,13 @@ var find = function(){
 	return dfd;
 };
 
-var defer = function(fn){
-	return function(){
-		var dfd = new Deferred();
-		fn(dfd);
-		return dfd;
-	}
-}
-var countUsers = defer(function(dfd){
-	find().then(function(users){
-		console.log('user amount:', users.length);
-		dfd.resolve(users);
-	});
-});
-
-var countUsersX = function(){
+var countUsers = function(){
 	var dfd = new Deferred();
 	find().then(function(users){
 		console.log('user amount:', users.length);
 		dfd.resolve(users);
 	});
+	
 	return dfd;
 }
 
@@ -88,12 +73,11 @@ var createUsersFromData = function(){
 
 
 var runTests = function(){
-	seq([
-		createUsersFromData,
-		countUsers
-	], 0).then(function(){
-		exit();
-	});
+	createUsersFromData().then(
+		countUsers().then(
+		//	exit()	
+		)
+	);
 };
 
 

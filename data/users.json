@@ -4,13 +4,15 @@
 		"firstname":"Mike",
 		"lastname":"Wilcox",
 		"email":"mike@mike.com",
-		"acl":"admin"
+		"acl":"admin",
+		"age":48
 	},
 	{
 		"username":"dataman",
 		"firstname":"Don",
 		"lastname":"Smith",
 		"email":"don@don.com",
-		"acl":"admin"
+		"acl":"admin",
+		"age":100
 	}
 ]
