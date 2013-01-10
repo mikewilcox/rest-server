@@ -1,0 +1,22 @@
+{
+	"listid":1,
+	"date":"01/10/2013", // this would be an informal string for reference, not a timestamp
+	"products":[
+		{
+			"productid":1,
+			"selected":true // as in taken off the shelf and placed in the cart
+		},
+		{
+			"productid":2,
+			"selected":false
+		},
+		{
+			"productid":3,
+			"selected":false
+		},
+		{
+			"productid":4,
+			"selected":false
+		}
+	]
+}
