@@ -1,14 +1,14 @@
 [
 	{
-		"storeid":1,
+		"locationid":1,
 		"name":"Kroger"
 	},
 	{
-		"storeid":2,
+		"locationid":2,
 		"name":"Market Street"
 	},
 	{
-		"storeid":3,
+		"locationid":3,
 		"name":"Whole Foods"
 	}
 ]
