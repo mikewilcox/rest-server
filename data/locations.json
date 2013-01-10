@@ -1,0 +1,14 @@
+[
+	{
+		"storeid":1,
+		"name":"Kroger"
+	},
+	{
+		"storeid":2,
+		"name":"Market Street"
+	},
+	{
+		"storeid":3,
+		"name":"Whole Foods"
+	}
+]

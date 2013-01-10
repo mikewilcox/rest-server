@@ -1,0 +1,62 @@
+[
+	{
+		"categoryid":1,
+		"name":"fruit"
+	},
+	{
+		"categoryid":2,
+		"name":"produce"
+	},
+	{
+		"categoryid":3,
+		"name":"vegetables"
+	},
+	{
+		"categoryid":4,
+		"name":"dry goods"
+	},
+	{
+		"categoryid":5,
+		"name":"bakery"
+	},
+	{
+		"categoryid":6,
+		"name":"bread"
+	},
+	{
+		"categoryid":7,
+		"name":"dairy"
+	},
+	{
+		"categoryid":8,
+		"name":"baking supplies"
+	},
+	{
+		"categoryid":9,
+		"name":"spices"
+	},
+	{
+		"categoryid":10,
+		"name":"bulk"
+	},
+	{
+		"categoryid":11,
+		"name":"gourmet cheese"	
+	},
+	{
+		"categoryid":12,
+		"name":"organics"	
+	},
+	{
+		"categoryid":13,
+		"name":"imported foods"	
+	},
+	{
+		"categoryid":14,
+		"name":"noodles"	
+	},
+	{
+		"categoryid":15,
+		"name":"canned goods"	
+	}
+]

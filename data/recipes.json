@@ -1,0 +1,17 @@
+[
+	{
+		"recipeid":1,
+		"name":"French Toast",
+		"products":[1,2,3]
+	},
+	{
+		"recipeid":2,
+		"name":"Spaghetti",
+		"products":[5,6]
+	},
+	{
+		"recipeid":3,
+		"name":"Grilled Cheese",
+		"products":[1,4,7]
+	}
+]
