@@ -49,7 +49,7 @@ userSchema.post('remove', function(item){
 User = mongoose.model('User', userSchema);
 
 
-addExtras(User);
+//addExtras(User);
 
 
 

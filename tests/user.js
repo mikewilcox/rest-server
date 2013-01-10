@@ -1,22 +1,24 @@
 // http://mongoosejs.com/docs/api.html#model_Model-remove
+
+
+var mongoose = require('mongoose');
+var log = require('../util/log')('USR', 1);
+var sequence = require('../util/util').sequence;
+var fs = require('fs');
+var testData = JSON.parse(fs.readFileSync('../data/users.json', 'utf-8'));
+mongoose.connect('mongodb://localhost/test');
+
+
 var exit = function(){
 	console.log('[program exiting normally]');
 	process.exit(0);
 };
 
 
-var mongoose = require('mongoose');
-var Deferred = require('promised-io/promise').Deferred;
-var all = require("promised-io/promise").all;
-var seq = require("promised-io/promise").seq;
-var step = require("promised-io/promise").step;
-var fs = require('fs');
-var testData = JSON.parse(fs.readFileSync('../data/users.json', 'utf-8'));
+var error = function(err){
+	console.error(err);
+}
 
-//console.log('seq:', seq);
-
-// add a check in mongoose for if db connected
-mongoose.connect('mongodb://localhost/test');
 
 var User = require('../model/User');
 
@@ -28,109 +30,65 @@ var create = function(name, age){
 	return user;
 }
 
-var save = function(user){
-	var dfd = new Deferred();
+var save = function(user, cb){
 	user.save(function(err, result){
 		if (err){
-			dfd.reject(err);
+			error(err);
 		}else{
-			dfd.resolve(result);
+			cb(result);
 		}	
 	});
-	return dfd;
 };
 
-var find = function(){
-	var dfd = new Deferred();
+var find = function(cb){
 	console.log(' * find users');
 	User.find(function(err, result){
 		if (err){
-			dfd.reject(err);
+			error(err);
 		}else{
-			dfd.resolve(result);
+			cb(result);
 		}	
 	});
-	return dfd;
 };
 
-var defer = function(fn){
-	return function(){
-		var dfd = new Deferred();
-		fn(dfd);
-		return dfd;
-	}
-}
-var countUsers = defer(function(dfd){
-	find().then(function(users){
-		console.log('user amount:', users.length);
-		dfd.resolve(users);
-	});
-});
 
-var countUsersX = function(){
-	var dfd = new Deferred();
-	find().then(function(users){
+var countUsers = function(cb){
+	find(function(users){
 		console.log('user amount:', users.length);
-		dfd.resolve(users);
+		cb(users);
 	});
-	return dfd;
-}
+};
 
-var createUsersFromData = function(){
-	var dfd = new Deferred();
-	var deferreds = testData.map(function(data){
+
+var createUsersFromData = function(cb){
+	var amt = testData.length;
+	var count = 0;
+	console.log('createUsersFromData', amt);
+	testData.forEach(function(data){
 		var user = new User(data);
-		return save(user);
+		save(user, function(){	
+			count++;
+			console.log('user!', count, amt);
+			if(count >= amt){
+				cb();
+			}
+		});
 	});
-	all(deferreds).then(function(){ dfd.resolve(); });
-	return dfd;
 };
 
 
 var runTests = function(){
-	seq([
+	sequence([
 		createUsersFromData,
-		countUsers
-	], 0).then(function(){
-		exit();
-	});
+		countUsers,
+		exit
+	]);
 };
 
 
 var onOpen = function(){
 	runTests();
-	return;
-
-	
-	var user = create('Snookie', 10);
-	console.log('name-o:', user.name, user.get('fullname'));
-	
-	save(user).then(function(){
-		User.df.find().then(function(users){
-			console.log('\nlist of users:', users.length);
-			
-			User.df.clear().then(function(){
-				console.log('all users removed. testing...');
-				User.df.find().then(function(users){
-					console.log('\nlist of users:', users.length);
-					exit();
-				});
-			})
-			
-			return;
-			var dfd = users[0].remove(function(){
-				console.log('user removed. testing...', dfd);
-				User.df.find().then(function(users){
-					console.log('\nlist of users:', users.length);
-					exit();
-				});
-			})
-		});
-	});
-	
-	
-}
-
+};
 
 
 var db = mongoose.connection;
