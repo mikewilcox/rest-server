@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var getUniqueId = require('../util/util').getUniqueId;
+var getIncId = require('../util/util').getIncId;
 
 var Product;
 var schema = new mongoose.Schema({
@@ -15,11 +16,28 @@ var schema = new mongoose.Schema({
 
 
 schema.pre('save', function(next, cb, arg){
-	console.log('about to save...', this);
-	this.productid = getUniqueId();
-	next();
+	var me = this;
+	console.log('about to save...', me.schema.name);
+	getIncId(Product, 'productid', function(id){
+		//var err = new Error('something went wrong');
+		//next(err);
+		// could find uniqueness here, but that might bog things down
+		me.productid = id;
+		next();
+	});
+	
+});
+schema.post('save', function(next, cb, arg){
+	console.log('saved.');
 });
 
 Product = mongoose.model('Product', schema);
+
+
+//var _save = Product.prototype.save;
+//Product.prototype.save = function(data, cb){
+//	_save.apply(this, arguments);
+//}
+//console.log('Product', Product.prototype.save);
 
 module.exports = Product;

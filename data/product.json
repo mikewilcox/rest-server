@@ -1,0 +1,10 @@
+[
+
+	{
+		"productid":2,
+		"name":"Eggs",
+		"fullname":"Brown Cage Free",
+		"categoryids":[7,12],
+		"locationids":[1,2,3]
+	}
+]
