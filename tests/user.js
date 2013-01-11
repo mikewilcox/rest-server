@@ -4,6 +4,7 @@
 var mongoose = require('mongoose');
 var log = require('../util/log')('USR', 1);
 var sequence = require('../util/util').sequence;
+var User = require('../model/User');
 var fs = require('fs');
 var testData = JSON.parse(fs.readFileSync('../data/users.json', 'utf-8'));
 mongoose.connect('mongodb://localhost/test');
@@ -20,7 +21,7 @@ var error = function(err){
 }
 
 
-var User = require('../model/User');
+
 
 var create = function(name, age){
 	name = name || 'Kevin';
@@ -30,8 +31,8 @@ var create = function(name, age){
 	return user;
 }
 
-var save = function(user, cb){
-	user.save(function(err, result){
+var save = function(item, cb){
+	item.save(function(err, result){
 		if (err){
 			error(err);
 		}else{
@@ -41,7 +42,7 @@ var save = function(user, cb){
 };
 
 var find = function(cb){
-	console.log(' * find users');
+	console.log(' * find items');
 	User.find(function(err, result){
 		if (err){
 			error(err);
@@ -52,18 +53,18 @@ var find = function(cb){
 };
 
 
-var countUsers = function(cb){
-	find(function(users){
-		console.log('user amount:', users.length);
-		cb(users);
+var countItems = function(cb){
+	find(function(items){
+		console.log('item amount:', items.length);
+		cb(items);
 	});
 };
 
 
-var createUsersFromData = function(cb){
+var createFromData = function(cb){
 	var amt = testData.length;
 	var count = 0;
-	console.log('createUsersFromData', amt);
+	console.log('createFromData', amt);
 	testData.forEach(function(data){
 		var user = new User(data);
 		save(user, function(){	
@@ -79,8 +80,8 @@ var createUsersFromData = function(cb){
 
 var runTests = function(){
 	sequence([
-		createUsersFromData,
-		countUsers,
+		createFromData,
+		countItems,
 		exit
 	]);
 };

@@ -1,6 +1,5 @@
 var mongoose = require('mongoose');
-var Deferred = require('promised-io/promise').Deferred;
-var addExtras  = require('./extras');
+var util = require('../util/util');
 
 var nameValidator = function(value){
 	console.log(' ---------------- NAME VALIDATOR', value, typeof value === 'string', value + 1);
@@ -15,8 +14,8 @@ var fullname = function(){
 	return "FULL"
 }
 
-var userSchema = new mongoose.Schema({
-	firstname: {type: String, required: true, validate: nameValidator},
+var schema = new mongoose.Schema({
+	listid: {type: Number, required: true, validate: nameValidator},
 	lastname:{type: String, required: true, validate: nameValidator},
 	fullname:{type: String, get:fullname},
 	age: {type: Number, required: true, validate: ageValidator},
@@ -31,8 +30,8 @@ userSchema.methods.speak = function () {
 	console.log(greeting);
 };
 
-userSchema.pre('save', function(next, cb, arg){
-	console.log('about to save...', this);
+userSchema.pre('save', function(next){
+	console.log('about to save...');
 	next();
 });
 userSchema.post('save', function(){
