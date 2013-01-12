@@ -110,18 +110,52 @@ var
 	},
 	
 	runTests = function(array){
+		console.log('RUNTESTS');
 		sequence(array);
 	},
 	
+	run = function(jobs, callback){
+		var rn = function(){
+			var job = jobs.shift();
+			job(function(){
+				// HANDLE ERRORS AND CONTINUE OR ABORT
+				if(jobs.length){
+					rn();
+				}else if(callback){
+					callback();
+				}
+			});
+		};
+		rn();
+	},
 	
-	connectdb = function(cb){
-		mongoose.connect('mongodb://localhost/test');
-		var db = mongoose.connection;
-		db.on('error', console.error.bind(console, 'connection error:'));
-		db.once('open', function callback () {
-			console.log('\n\n\n\n db open.');
+	
+	_connected = 0,
+	_initialized = 0,
+	_queue = [],
+	_dequeue = function(){
+		while(_queue.length){
+			var cb = _queue.shift();
 			cb();
-		});
+		}	
+	},
+	connectdb = function(cb){
+		if(_connected){
+			cb();
+			return;
+		}
+		_queue.push(cb);	
+		if(!_initialized){
+			mongoose.connect('mongodb://localhost/test');
+			var db = mongoose.connection;
+			db.on('error', console.error.bind(console, 'connection error:'));
+			db.once('open', function callback () {
+				console.log('db open.');
+				_connected = 1;
+				process.nextTick(_dequeue);
+			});
+			_initialized = 1;
+		}
 	};
 
 
@@ -134,6 +168,7 @@ module.exports = {
 	save:save,
 	removeAll:removeAll,
 	runTests:runTests,
+	run:run,
 	connectdb:connectdb,
 	exit:exit
 };

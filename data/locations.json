@@ -1,14 +1,22 @@
 [
 	{
 		"locationid":1,
-		"name":"Kroger"
+		"label":"Kroger",
+		"description":"Kroger Little Elm"
 	},
 	{
 		"locationid":2,
-		"name":"Market Street"
+		"label":"Market Street",
+		"description":"Market Street Frisco"
 	},
 	{
 		"locationid":3,
-		"name":"Whole Foods"
+		"label":"Whole Foods",
+		"description":"Whole Foods Plano"
+	},
+	{
+		"locationid":4,
+		"label":"Kroger",
+		"description":"Kroger Frisco"
 	}
 ]

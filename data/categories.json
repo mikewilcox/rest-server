@@ -1,62 +1,62 @@
 [
 	{
 		"categoryid":1,
-		"name":"fruit"
+		"label":"fruit"
 	},
 	{
 		"categoryid":2,
-		"name":"produce"
+		"label":"produce"
 	},
 	{
 		"categoryid":3,
-		"name":"vegetables"
+		"label":"vegetables"
 	},
 	{
 		"categoryid":4,
-		"name":"dry goods"
+		"label":"dry goods"
 	},
 	{
 		"categoryid":5,
-		"name":"bakery"
+		"label":"bakery"
 	},
 	{
 		"categoryid":6,
-		"name":"bread"
+		"label":"bread"
 	},
 	{
 		"categoryid":7,
-		"name":"dairy"
+		"label":"dairy"
 	},
 	{
 		"categoryid":8,
-		"name":"baking supplies"
+		"label":"baking supplies"
 	},
 	{
 		"categoryid":9,
-		"name":"spices"
+		"label":"spices"
 	},
 	{
 		"categoryid":10,
-		"name":"bulk"
+		"label":"bulk"
 	},
 	{
 		"categoryid":11,
-		"name":"gourmet cheese"	
+		"label":"gourmet cheese"	
 	},
 	{
 		"categoryid":12,
-		"name":"organics"	
+		"label":"organics"	
 	},
 	{
 		"categoryid":13,
-		"name":"imported foods"	
+		"label":"imported foods"	
 	},
 	{
 		"categoryid":14,
-		"name":"noodles"	
+		"label":"noodles"	
 	},
 	{
 		"categoryid":15,
-		"name":"canned goods"	
+		"label":"canned goods"	
 	}
 ]

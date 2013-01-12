@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var getJson = require('../util/util').getJson;
-var log = require('../util/log')('', 1);
+
 var getIncId = require('../util/util').getIncId;
 
 
@@ -8,8 +8,9 @@ var declareModel = function(className, schema){
 	
 	var
 		Model,
-		incrementingKey;
-	
+		incrementingKey,
+		log = require('../util/log')(className, 1);
+		
 	for(var key in schema){
 		var props = schema[key];
 		if(props.incrementing){
@@ -50,7 +51,7 @@ var declareModel = function(className, schema){
 				if (err){
 					error(err);
 				}else{
-					if(logItem) log(result);
+					if(logItem) console.log(result);
 					cb(result);
 				}	
 			});
@@ -72,6 +73,7 @@ var declareModel = function(className, schema){
 		},
 		
 		setProps = function(options){
+			console.log(process.cwd());
 			if(options.dataPath) itemData = getJson(options.dataPath);
 			if(options.logItem) logItem = 1;
 		},
@@ -80,13 +82,13 @@ var declareModel = function(className, schema){
 		// callback hell
 		
 		logItems = function(cb){
-			log('allitems', allitems);
+			console.log('allitems', allitems);
 			cb();
 		},
 		
 		countItems = function(cb){
 			find(function(items){
-				log('item amount:', items.length);
+				console.log('item amount:', items.length);
 				allitems = items;
 				cb(items);
 			});
@@ -122,6 +124,7 @@ var declareModel = function(className, schema){
 			if(!allitems){
 				find(function(result){
 					if(!result || !result.length){
+						log('no items to remove');
 						cb();	
 					}else{
 						allitems = result;
@@ -165,6 +168,25 @@ var declareModel = function(className, schema){
 	Model.findAll = find;
 	Model.save = save;
 	Model.removeAll = removeAll;
+	
+	Model.tests = {
+		all:[
+			Model.removeAll,
+			Model.createFromData,
+			Model.countItems,
+			Model.logItems,
+			Model.removeAll,
+			Model.countItems
+		],
+		init:[
+			Model.removeAll,
+			Model.createFromData,
+			Model.countItems
+		],
+		remove:[
+			Model.removeAll
+		]
+	}
 	
 	return Model;
 };

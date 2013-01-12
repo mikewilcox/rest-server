@@ -1,17 +1,17 @@
 [
 	{
 		"recipeid":1,
-		"name":"French Toast",
+		"label":"French Toast",
 		"productids":[1,2,3]
 	},
 	{
 		"recipeid":2,
-		"name":"Spaghetti",
+		"label":"Spaghetti",
 		"productids":[5,6]
 	},
 	{
 		"recipeid":3,
-		"name":"Grilled Cheese",
+		"label":"Grilled Cheese",
 		"productids":[1,4,7]
 	}
 ]

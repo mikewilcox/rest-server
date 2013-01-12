@@ -48,7 +48,12 @@ var
 		// strip comments
 		var text = fs.readFileSync(path, 'utf-8');
 		text = text.replace(commentRegExp, '');
-		return JSON.parse(text);
+		try{
+			return JSON.parse(text);
+		}catch(e){
+			console.error('Error parsing json file ', path, e);
+			throw new Error(e);
+		}
 	};
 
 
