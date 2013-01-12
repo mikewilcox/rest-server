@@ -1,8 +1,8 @@
 [
 	{
 		"productid":1,
-		"name":"Bread",
-		"fullname":"Italian Bread from Bakery",
+		"label":"Bread",
+		"fulllabel":"Italian Bread from Bakery",
 		"categoryids":[5,6],
 		"locationids":[1,2],
 		"recurring":true, // whether to always pre-populate new list with this item
@@ -14,42 +14,42 @@
 	},
 	{
 		"productid":2,
-		"name":"Eggs",
-		"fullname":"Brown Cage Free",
+		"label":"Eggs",
+		"fulllabel":"Brown Cage Free",
 		"categoryids":[7,12],
 		"locationids":[1,2,3]
 	},
 	{
 		"productid":3,
-		"name":"Cooking Oil",
-		"fullname":"Peanut Oil",
+		"label":"Cooking Oil",
+		"fulllabel":"Peanut Oil",
 		"categoryids":[8],
 		"locationids":[1,2,3]
 	},{
 		"productid":4,
-		"name":"Butter",
-		"fullname":"Organic Butter",
+		"label":"Butter",
+		"fulllabel":"Organic Butter",
 		"categoryids":[7,12],
 		"locationids":[1,2]
 	},
 	{
 		"productid":5,
-		"name":"Angel Hair",
-		"fullname":"Angel Hair Pasta, Durum Wheat",
+		"label":"Angel Hair",
+		"fulllabel":"Angel Hair Pasta, Durum Wheat",
 		"categoryids":[13,14],
 		"locationids":[1,2,3]
 	},
 	{
 		"productid":6,
-		"name":"Prego",
-		"fullname":"Prego Spaghetti Sauce",
+		"label":"Prego",
+		"fulllabel":"Prego Spaghetti Sauce",
 		"categoryids":[15],
 		"locationids":[1,2,3]
 	},
 	{
 		"productid":7,
-		"name":"Cheddar Cheese",
-		"fullname":"The Gourmet Shit",
+		"label":"Cheddar Cheese",
+		"fulllabel":"The Gourmet Shit",
 		"categoryids":[11],
 		"locationids":[3]
 	}

@@ -2,12 +2,16 @@ var mongoose = require('mongoose');
 var log = require('../util/log')('', 1);
 var sequence = require('../util/util').sequence;
 var getJson = require('../util/util').getJson;
-var Product = require('../model/Product');
 
 var exit = function(){
 	console.log('[program exiting normally]');
 	process.exit(0);
 };
+
+var error = function(err){
+	log('ERR');
+	console.error('Error:', err);
+}
 
 var
 	allitems,
@@ -27,7 +31,7 @@ var
 	
 	countItems = function(cb){
 		find(function(items){
-			console.log('item amount:', items.length);
+			log('item amount:', items.length);
 			allitems = items;
 			cb(items);
 		});
@@ -35,7 +39,7 @@ var
 	
 	find = function(cb){
 		// don't cache items, because they need to be refetched
-		console.log(' * find items');
+		log(' * find items');
 		Item.find(function(err, result){
 			if (err){
 				error(err);
@@ -56,33 +60,53 @@ var
 	},
 	
 	removeAll = function(cb){
-		var amt = allitems.length;
-		var count = 0;
-		console.log('removeAll', amt);
-		allitems.forEach(function(item){
-			item.remove(function(){	
-				count++;
-				if(count >= amt){
-					cb();
+		var rm = function(){
+			var amt = allitems.length;
+			var count = 0;
+			log('removeAll', amt);
+			
+			allitems.forEach(function(item){
+				item.remove(function(){	
+					count++;
+					if(count >= amt){
+						cb();
+					}
+				});
+			});
+		};
+		if(!allitems){
+			find(function(result){
+				if(!result || !result.length){
+					cb();	
+				}else{
+					allitems = result;
+					rm();
 				}
 			});
-		});
+		}else{
+			rm();
+		}
+		
 	},
 	
 	createFromData = function(cb){
 		var amt = testData.length;
 		var count = 0;
-		console.log('createFromData', amt);
-		testData.forEach(function(data){
+		log('createFromData', amt);
+		var sv = function(){
+			log('sv', testData.length);
+			var data = testData.pop();
 			var item = new Item(data);
-			save(item, function(){	
-				count++;
-				//console.log('item!', count, amt);
-				if(count >= amt){
+			save(item, function(){
+				log("sv'd");
+				if(testData.length){
+					sv();
+				}else{
 					cb();
 				}
 			});
-		});
+		};
+		sv();
 	},
 	
 	runTests = function(array){

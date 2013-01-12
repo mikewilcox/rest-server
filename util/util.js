@@ -23,19 +23,21 @@ var
 		return d + r + count;
 	},
 	
-	getIncId = function(Item, property, cb){
+	getIncId = function(Item, instance, property, cb){
 		if(Item._incId){
 			Item._incId++;
-			cb(Item._incId);
+			instance[property] = Item._incId;
+			cb();
 		}else{
 			Item.find(function(err, items){
-				console.log('on save, found this many:', items);
+				console.log('getIncId, found this many:', items);
 				var id = 0;
 				items.forEach(function(item){
 					id = Math.max(id, item[property]);
 				});
 				Item._incId = id + 1;
-				cb(Item._incId);
+				instance[property] = Item._incId;
+				cb();
 			});	
 		}
 		

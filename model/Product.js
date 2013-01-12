@@ -4,8 +4,8 @@ var getIncId = require('../util/util').getIncId;
 
 var Product;
 var schema = new mongoose.Schema({
-	name: {type: String, required: true},
-	fullname: {type: String},	
+	label: {type: String, required: true},
+	fulllabel: {type: String},	
 	notes: {type: String},
 	categoryids:{type:Array},
 	locationids:{type:Array},
@@ -16,19 +16,13 @@ var schema = new mongoose.Schema({
 
 
 schema.pre('save', function(next, cb, arg){
-	var me = this;
-	console.log('about to save...', me.schema.name);
-	getIncId(Product, 'productid', function(id){
-		//var err = new Error('something went wrong');
-		//next(err);
-		// could find uniqueness here, but that might bog things down
-		me.productid = id;
-		next();
-	});
-	
+	console.log('about to save...');
+	getIncId(Product, this, 'productid', next);
 });
-schema.post('save', function(next, cb, arg){
-	console.log('saved.');
+	
+schema.post('save', function(item, num){
+	console.log('saved.', item);
+	
 });
 
 Product = mongoose.model('Product', schema);
