@@ -96,7 +96,7 @@ var declareModel = function(className, schema){
 						}
 					}
 				});
-				log.logTable(itemprops);
+				log.table(itemprops);
 				cb();
 			});
 		},

@@ -1,3 +1,9 @@
+/*
+ *	log is accessed like:
+ *		var log = require('../util/log')('FOO', 1);
+ *		log('MOO'); // [FOO] MOO
+ */
+
 var log = function(name, enabled){
 	if((enabled === false || enabled === 0)) { return function(){}; }
 	var logger = function(){
@@ -5,9 +11,21 @@ var log = function(name, enabled){
 		if(name) { args.unshift(" ["+name+"] "); }
 		console.log.apply(console, args);
 	};
-	logger.logTable = logTable;
+	logger.table = table;
 	return logger;
 };
+
+/*
+ *	table is accessed like:
+ *		var log = require('../util/log')('FOO', 1);
+ *		log.table(object);
+ *
+ *	object should contain arrays of equal length
+ *		object = {
+ *			a:[1,2]
+ *			b:[4,5]
+ *		}
+ */
 
 var forIn = function(obj, cb){
 	for(var key in obj){
@@ -41,37 +59,32 @@ var makeStr = function(chr, len){
 	return str;
 }
 
-var logTable = function(obj){
-	console.log('LOGTABLE');
-	
-	console.log(obj);
+var table = function(obj){
 	
 	var labels = [];
 	var props = [];
 	var values = [];
 	
+	// set labels
 	forIn(obj, function(key, arr){
 		labels.push(key);
 		values.push(arr);
 	});
 	
+	// set values into columns
 	values[0].forEach(function(lbl, i){
 		props[i] = [];
 		values.forEach(function(arr, ii){
 			props[i].push(arr[i]);
 		});
 	});
-	
 	props.unshift(labels);
 	
-	console.log(props);
-	
+	// get common value string lengths
 	var totalLength = 0;
-	
 	props[0].forEach(function(m, i){
 		var max = 0;
 		props.forEach(function(ar){
-			//if(ar[i])
 			max = Math.max((ar[i]+'').length, max);
 		});
 		max++;
@@ -82,6 +95,7 @@ var logTable = function(obj){
 		});
 	});
 	
+	// log it
 	var line = makeStr('=', totalLength+1);
 	var div = makeStr('.', totalLength+1);
 	console.log(line);
@@ -93,6 +107,6 @@ var logTable = function(obj){
 };
 
 
-log.logTable = logTable;
+
 
 module.exports = exports = log;
