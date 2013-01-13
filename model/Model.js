@@ -1,6 +1,5 @@
 var mongoose = require('mongoose');
 var getJson = require('../util/util').getJson;
-
 var getIncId = require('../util/util').getIncId;
 
 
@@ -19,7 +18,7 @@ var declareModel = function(className, schema){
 		}
 	}
 	
-	log('incrementingKey', incrementingKey);
+	//log('incrementingKey', incrementingKey);
 	schema = new mongoose.Schema(schema);
 	
 	
@@ -78,12 +77,50 @@ var declareModel = function(className, schema){
 			if(options.logItem) logItem = 1;
 		},
 		
-		// The following should not have any arguments except cb in order to mitigate
+		// The following should not have any arguments except cb (callback) in order to mitigate
 		// callback hell
 		
 		logItems = function(cb){
 			console.log('allitems', allitems);
-			cb();
+			var excludes = '_id,timestamp,__v'.split(',');
+			find(function(items){
+				console.log('item amount:', items.length);
+				allitems = items;
+				var itemprops = {};
+				allitems.forEach(function(item){
+					var props = [];
+					for(var key in item.schema.paths){
+						if(!~excludes.indexOf(key)){
+							itemprops[key] = itemprops[key] || [];
+							itemprops[key].push(item[key] || ' ');
+						}
+					}
+				});
+				log.logTable(itemprops);
+				cb();
+			});
+		},
+		
+		XlogItems = function(cb){
+			console.log('allitems', allitems);
+			var excludes = '_id,timestamp,__v'.split(',');
+			find(function(items){
+				console.log('item amount:', items.length);
+				allitems = items;
+				var itemprops = [];
+				allitems.forEach(function(item){
+					var props = [];
+					for(var key in item.schema.paths){
+						if(!~excludes.indexOf(key)){
+							props.push(key + ':' + (item[key] || ""));
+						}
+					}
+					itemprops.push(props);
+					//console.log('  ', props.join(', '));//, '\n', item.schema.paths);
+				});
+				log.logTable(itemprops);
+				cb();
+			});
 		},
 		
 		countItems = function(cb){
@@ -177,6 +214,9 @@ var declareModel = function(className, schema){
 			Model.logItems,
 			Model.removeAll,
 			Model.countItems
+		],
+		log:[
+			Model.logItems
 		],
 		init:[
 			Model.removeAll,

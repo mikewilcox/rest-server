@@ -44,6 +44,14 @@ var
 		
 	},
 	
+	forIn = function(obj, cb){ // note lack of context option
+		for(var key in obj){
+			if(obj.hasOwnProperty(key)){
+				cb(key, obj[key]);
+			}
+		}
+	},
+	
 	getJson = function(path){
 		// strip comments
 		var text = fs.readFileSync(path, 'utf-8');

@@ -6,6 +6,7 @@
  * 				all (runs tests)
  * 				init (erases current data and replaces it with test data)
  * 				remove (clears data from db)
+ * 				log (logs item properties)
  * 				
  */
 
