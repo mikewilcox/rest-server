@@ -48,11 +48,26 @@ var declareModel = function(className, schema){
 			item.save(function(err, result){
 				if (err){
 					error(err);
+					cb(null, err);
 				}else{
 					if(logItem) console.log(result);
 					cb(result);
 				}	
 			});
+		},
+		
+		normalizeId = function(thing){
+			return (typeof thing === 'string' || thing === 'number' ? thing : thing.id) + ''; // also check if Model ?
+		},
+		
+		handleResult = function(item, err, cb){
+			if(err){
+				cb({success:0, error:err});
+			}else if(item){
+				cb(item);
+			}else{
+				cb({success:0, error:'Item not found'})
+			}
 		},
 		
 		// public, non-chainable
@@ -82,33 +97,43 @@ var declareModel = function(className, schema){
 		
 		create = function(data, cb){
 			var item = new Model(data);
-			save(item, function(user){
-				cb(user);
+			save(item, function(item, err){
+				handleResult(item, err, cb);
 			});
 		},
 		
 		read = function(data, cb){
-			var id = typeof data === 'string' ? data : data.id;
+			var id = normalizeId(data);
 			console.log('read', data, id);
-			Model.findById(id, '-__v').exec(function(err, user){
-				console.log('read:', err, user);
-				cb(user);
+			Model.findById(id, '-__v').exec(function(err, item){
+				handleResult(item, err, cb);
 			});
 		},
 		
 		update = function(data, cb){
-			Model.findByIdAndUpdate(data.id, data).exec(function(err, user){
-				console.log('read:', err, user);
-				cb(user);
+			var id = normalizeId(data);
+			Model.findByIdAndUpdate(id, data).exec(function(err, item){
+				handleResult(item, err, cb);
 			});
 		},
 		
 		remove = function(data, cb){
-			var id = typeof data === 'string' ? data : data.id; // also check if Model
+			var id = normalizeId(data); 
 			Model.findById(id, function(err, item){
+				if(err){
+					cb({success:0, error:err});
+					return;
+				}else if(!item){
+					cb({success:0, error:'item not found'});
+					return;
+				}
 				console.log('remove:', err, item);
 				item.remove(function(err){
-					cb({success:!err});	
+					if(err){
+						cb({success:0, error:err});	
+					}else{
+						cb({success:1});
+					}	
 				});
 				
 			});

@@ -8,10 +8,19 @@ define([
 	var putUser = dom.byId('putUserBtn');
 	var postUser = dom.byId('postUserBtn');
 	var rmUser = dom.byId('rmUserBtn');
+	var allUser = dom.byId('allUserBtn');
 	
+	var MIKE = '50f2f3caed4c2c6d48000001';
+	var DON = '50f1cf1e4292b4f83500001e';
 	
 	on(getUser, 'click', function(){
-		request('http://localhost:3000/user/50f1cf1e4292b4f83500001f').then(function(result){
+		request('http://localhost:3000/user/' + 100).then(function(result){
+			console.log('result', result);
+		});	
+	});
+	
+	on(allUser, 'click', function(){
+		request('http://localhost:3000/users').then(function(result){
 			console.log('result', result);
 		});	
 	});
@@ -43,7 +52,7 @@ define([
 	on(rmUser, 'click', function(){
 		request.del('http://localhost:3000/user', {
 			data:{
-				id:'50f2fa143aa08aee48000001'
+				id:'50f2f3caed4c2c6d48000001'
 			}
 		}).then(function(result){
 			console.log('result', result);
