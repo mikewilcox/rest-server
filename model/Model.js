@@ -55,6 +55,8 @@ var declareModel = function(className, schema){
 			});
 		},
 		
+		// public, non-chainable
+		
 		run = function(jobs, callback){
 			var rn = function(){
 				var job = jobs.shift();
@@ -76,12 +78,48 @@ var declareModel = function(className, schema){
 			if(options.logItem) logItem = 1;
 		},
 		
+		
+		
+		create = function(data, cb){
+			var item = new Model(data);
+			save(item, function(user){
+				cb(user);
+			});
+		},
+		
+		read = function(data, cb){
+			var id = typeof data === 'string' ? data : data.id;
+			console.log('read', data, id);
+			Model.findById(id, '-__v').exec(function(err, user){
+				console.log('read:', err, user);
+				cb(user);
+			});
+		},
+		
+		update = function(data, cb){
+			Model.findByIdAndUpdate(data.id, data).exec(function(err, user){
+				console.log('read:', err, user);
+				cb(user);
+			});
+		},
+		
+		remove = function(data, cb){
+			var id = typeof data === 'string' ? data : data.id; // also check if Model
+			Model.findById(id, function(err, item){
+				console.log('remove:', err, item);
+				item.remove(function(err){
+					cb({success:!err});	
+				});
+				
+			});
+		},
+		
 		// The following should not have any arguments except cb (callback) in order to mitigate
 		// callback hell
 		
 		logItems = function(cb){
 			console.log('allitems', allitems);
-			var excludes = '_id,timestamp,__v'.split(',');
+			var excludes = '_idXX,timestamp,__v'.split(',');
 			find(function(items){
 				console.log('item amount:', items.length);
 				allitems = items;
@@ -197,6 +235,10 @@ var declareModel = function(className, schema){
 		};
 	
 	Model.setProps = setProps;
+	Model.create = create,
+	Model.read = read,
+	Model.remove = remove,
+	Model.update = update,
 	Model.run = run;
 	Model.logItems = logItems;
 	Model.createFromData = createFromData;

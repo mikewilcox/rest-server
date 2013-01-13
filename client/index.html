@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <title>Rest Test</title>
+	<script>
+		dojoConfig = {
+			isDebug:1,
+			async:1
+		}
+	</script>
+	<script src='./dojo/dojo.js'></script>
+	
+</head>
+<body>
+    <h1>Rest Test</h1>
+	<div>
+		<button id='postUserBtn'>Post User</button>
+		<button id='putUserBtn'>Put User</button>
+		<button id='getUserBtn'>Get User</button>
+		<button id='rmUserBtn'>Remove User</button>
+	</div>
+	<script>
+		require(['app/main']);
+	</script>
+</body>
+</html>
