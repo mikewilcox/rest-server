@@ -18,19 +18,22 @@ console.log('\n\n\n\nstart tests');
 
 if(test === 'all'){
 	var tests = [];
+	// get all tests from tests/models
 	require('fs').readdirSync('./models/').forEach(function(srcFile){
 		var id = srcFile.split('.')[0];
 		var mid = './models/' + id;
 		tests.push(function(cb){
-			require(mid)(type, function(){
-				cb();
-			});
+			// require in the test, pass in the test-type, and callback for continuation
+			require(mid)(type, cb);
 		});
 	});
+	// run tests.
+	// testMethods.run second arg is a callback
 	testMethods.run(tests, function(){
 		process.exit(0);	
 	});
 }else{
+	// single test
 	require('./models/'+test)(type, function(){
 		console.log('DONE');
 		process.exit(0);
