@@ -6,13 +6,13 @@ var connectdb = function(cb){
 	var db = mongoose.connection;
 	db.on('error', console.error.bind(console, 'connection error:'));
 	db.once('open', function callback () {
-		console.log('db open.');
+		log('db open.');
 		if(cb) process.nextTick(cb);
 	});
 };
-connectdb();
+connectdb(function(){
+	var createRoute = require('./base');
+	createRoute('../model/User', 'user');
+	//require('./user');
+});
 
-
-module.exports = function(app){
-	require('./user')(app);	
-}

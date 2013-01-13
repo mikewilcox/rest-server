@@ -2,6 +2,7 @@ define([
 	'dojo/dom',
 	'dojo/on',
 	'dojo/request',
+	'./store'
 ], function(dom, on, request){
 	
 	var getUser = dom.byId('getUserBtn');
@@ -10,11 +11,11 @@ define([
 	var rmUser = dom.byId('rmUserBtn');
 	var allUser = dom.byId('allUserBtn');
 	
-	var MIKE = '50f2f3caed4c2c6d48000001';
+	var MIKE = '50f1cf1e4292b4f83500001f';
 	var DON = '50f1cf1e4292b4f83500001e';
 	
 	on(getUser, 'click', function(){
-		request('http://localhost:3000/user/' + 100).then(function(result){
+		request('http://localhost:3000/user/' + MIKE).then(function(result){
 			console.log('result', result);
 		});	
 	});
