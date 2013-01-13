@@ -21,7 +21,6 @@ var declareModel = function(className, schema){
 	//log('incrementingKey', incrementingKey);
 	schema = new mongoose.Schema(schema);
 	
-	
 	if(incrementingKey){
 		schema.pre('save', function(next, cb, arg){
 			log('about to save...', incrementingKey);
