@@ -33,7 +33,14 @@ module.exports = function(modelPath, path){
 			log('found items', items);
 			res.send(items);	
 		});
-		
+	});
+	
+	app.get('/' + path + '?', function(req, res){
+		log('get item query', req.query);
+		Model.find(req.query, function(err, items){
+			log('found items', items);
+			res.send(items);	
+		});
 	});
 	
 	app.post('/' + path, function(req, res){
@@ -48,8 +55,13 @@ module.exports = function(modelPath, path){
 		}
 	});
 	
-	app.put('/' + path, function(req, res){
+	app.put('/' + path + '/:id', function(req, res){
 		log('received PUT for /item');
+		
+		// TODO: Mix params with object so partial data can be sent
+		
+		
+		// body has post data, params has id
 		log(req.body, req.params);
 		if(!req.body){
 			res.send({success:0});
@@ -60,14 +72,14 @@ module.exports = function(modelPath, path){
 		}
 	});
 	
-	app.del('/' + path, function(req, res){
-		log('received DELETE for /item');
+	app.del('/' + path + '/:id', function(req, res){
+		log('received DELETE for /item', req.params.id);
 		log(req.body, req.params);
-		if(!req.body){
-			res.send({success:0});
+		if(!req.params.id){
+			res.send({success:0, error:'No ID sent'});
 		}else{
-			Model.remove(req.body, function(result){
-				res.send(result);
+			Model.remove(req.params.id, function(result){
+				res.send(result); // an object with success:1 or error
 			});	
 		}
 	});

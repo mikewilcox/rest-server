@@ -10,12 +10,19 @@ define([
 	var postUser = dom.byId('postUserBtn');
 	var rmUser = dom.byId('rmUserBtn');
 	var allUser = dom.byId('allUserBtn');
+	var queryUser = dom.byId('queryUserBtn');
 	
 	var MIKE = '50f1cf1e4292b4f83500001f';
 	var DON = '50f1cf1e4292b4f83500001e';
 	
 	on(getUser, 'click', function(){
 		request('http://localhost:3000/user/' + MIKE).then(function(result){
+			console.log('result', result);
+		});	
+	});
+	
+	on(queryUser, 'click', function(){
+		request('http://localhost:3000/user?firstname=Robert').then(function(result){
 			console.log('result', result);
 		});	
 	});
