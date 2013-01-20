@@ -4,10 +4,14 @@
 	"products":[
 		{
 			"productid":1,
+			"amount":2,
+			"units":1, // pounds, gallons, ounces, count, etc
 			"selected":true // as in taken off the shelf and placed in the cart
 		},
 		{
-			"productid":2,
+			"productid":10,
+			"amount":1,
+			"units":4,
 			"selected":false
 		},
 		{

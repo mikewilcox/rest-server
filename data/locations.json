@@ -3,6 +3,7 @@
 		"locationid":1,
 		"label":"Kroger",
 		"description":"Kroger Little Elm"
+		// meta: how often visted, dates, etc
 	},
 	{
 		"locationid":2,

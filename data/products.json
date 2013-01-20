@@ -1,4 +1,7 @@
 [
+	// need two (or multiple) product lists:
+	// personal or account products
+	// global, shared, or public products
 	{
 		"productid":1,
 		"label":"Bread",
@@ -8,9 +11,11 @@
 		"recurring":true, // whether to always pre-populate new list with this item
 		
 		"preferredlocationids":[2,1,3], // stores in order of where item is cheapest or best
-		"prices":[], // per store
+		"prices":[], // per store... how to do that?
 		"photos":[], // links
-		"notes":"Kevin like's the kind without HFCS"
+		"usephoto":0, // id of photo link to use
+		"notes":"Kevin like's the kind without HFCS",
+		// meta: how many times purchased, dates, etc?
 	},
 	{
 		"productid":2,
@@ -52,5 +57,23 @@
 		"fulllabel":"The Gourmet Shit",
 		"categoryids":[11],
 		"locationids":[3]
+	},{
+		"productid":8,
+		"label":"Milk 2%",
+		"fulllabel":"Organic 2% Milk",
+		"categoryids":[7,12],
+		"locationids":[1,2]
+	},{
+		"productid":9,
+		"label":"Milk Skim",
+		"fulllabel":"Organic Skim Milk",
+		"categoryids":[7,12],
+		"locationids":[1,2]
+	},{
+		"productid":10,
+		"label":"Milk",
+		"fulllabel":"Organic Whole Milk",
+		"categoryids":[7,12],
+		"locationids":[1,2]
 	}
 ]
