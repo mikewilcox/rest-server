@@ -11,6 +11,7 @@
 		"recurring":true, // whether to always pre-populate new list with this item
 		
 		"preferredlocationids":[2,1,3], // stores in order of where item is cheapest or best
+		"confirnedlocationids":[2,1,3], // stores that have been confirmed (via a purchase) to have the item
 		"prices":[], // per store... how to do that?
 		"photos":[], // links
 		"usephoto":0, // id of photo link to use

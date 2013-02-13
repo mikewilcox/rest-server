@@ -5,9 +5,15 @@ module.exports = function(modelPath, path){
 	
 	var Model = require(modelPath);
 	
-	log('create route for ', path, Model);
+	log('create route for ', path);
 	
 	app.all('/users', function(req, res, next) {
+		res.header("Access-Control-Allow-Origin", "*");
+		res.header("Access-Control-Allow-Headers", "X-Requested-With");
+		next();
+	});
+	
+	app.all('/user', function(req, res, next) {
 		res.header("Access-Control-Allow-Origin", "*");
 		res.header("Access-Control-Allow-Headers", "X-Requested-With");
 		next();

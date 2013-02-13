@@ -7,6 +7,9 @@ define([
 ], function(declare, when, Memory, Observable, JsonRest){
 	
 	// https://github.com/sirprize/dojo-local-storage/blob/master/LocalStorage.js
+	// https://gist.github.com/880822
+	
+	//
 	
 	console.log('Create JsonRest');
 	

@@ -61,11 +61,10 @@ var declareModel = function(className, schema){
 		},
 		
 		handleResult = function(item, err, cb){
-			item.id = item._id;
-			//delete item._id;
 			if(err){
 				cb({success:0, error:err});
 			}else if(item){
+				item.id = item._id;
 				cb(item);
 			}else{
 				cb({success:0, error:'Item not found'})
