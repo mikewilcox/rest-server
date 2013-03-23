@@ -13,3 +13,5 @@ app.get('/', function(req, res){
 require('./routes/router');
 
 app.listen(3000);
+
+require('./sockets').start(app, 8080);

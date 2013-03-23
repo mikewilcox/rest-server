@@ -10,6 +10,7 @@
 	</script>
 	<script src='./dojo/dojo.js'></script>
 	
+	
 </head>
 <body>
     <h1>Rest Test</h1>
@@ -22,7 +23,49 @@
 		<button id='queryUserBtn'>Query Users</button>
 	</div>
 	<script>
-		require(['app/main']);
+		//require(['app/main']);
+	</script>
+	<script src="http://localhost:3000/socket.io/socket.io.js"></script>
+	<script>
+		document.getElementById('box').className = 'move';
+		function doSocket(){
+			var socket = io.connect('http://localhost:8080');
+			socket.on('news', function (data) {
+				console.log(data);
+				socket.emit('my other event', { my: 'data' });
+			});
+			
+			var store = [];
+			socket.on('stream', function (data) {
+				if(data === 'start'){
+					console.log('start stream');
+					console.time('stream');
+				}
+				else if(data === 'end'){
+					console.log('end stream');
+					console.timeEnd('stream');
+				}
+				else{
+					//console.log(JSON.parse(data));
+					store.push(JSON.parse(data));
+				}
+				
+			});
+		}
+		
+		function doWorker(){
+			var worker = new Worker('worker.js');
+			worker.onmessage = function(event) {
+				console.log("Worker said : " + event.data);
+			};
+			worker.addEventListener('message', function(e) {
+				console.log("Worker said : " + e.data);
+			}, false);
+			worker.postMessage('mike');
+		}
+		//doWorker();
+		doSocket();
+		
 	</script>
 </body>
 </html>
